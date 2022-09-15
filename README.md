@@ -1,7 +1,7 @@
 # Installation
 
 ```
-curl -OL https://github.com/lotusshinoaki/retry/releases/download/0.1.1/x86_64-unknown-linux-gnu.zip
+curl -OL https://github.com/lotusshinoaki/retry/releases/download/0.2.0/x86_64-unknown-linux-gnu.zip
 unzip x86_64-unknown-linux-gnu.zip
 cp x86_64-unknown-linux-gnu/retry </path/to/bin>
 ```

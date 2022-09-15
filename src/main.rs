@@ -14,6 +14,8 @@ struct Args {
     max_delay: u64,
     #[clap(short, long, value_parser, default_value_t = 1)]
     backoff: u64,
+    #[clap(short, long, value_parser, default_value_t = false)]
+    quiet: bool,
     #[clap(value_parser)]
     utility: String,
     #[clap(value_parser)]
@@ -37,18 +39,24 @@ fn main() {
                 }
             },
             Err(e) => {
-                eprintln!("Error: Could not spawn child process. {}", e);
+                if !args.quiet {
+                    eprintln!("Error: Could not spawn child process. {}", e);
+                }
                 exit(1);
             },
         }
 
         if count == args.tries {
-            eprintln!("Error: Maximum number of retries reached");
+            if !args.quiet {
+                eprintln!("Error: Maximum number of retries reached");
+            }
             exit(1);
         }
         count += 1;
 
-        println!("Retrying({}): Wait {} seconds", count, next_delay);
+        if !args.quiet {
+            println!("Retrying({}): Wait {} seconds", count, next_delay);
+        }
         thread::sleep(time::Duration::from_secs(next_delay));
 
         next_delay *= args.backoff;
